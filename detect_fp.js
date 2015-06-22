@@ -14,7 +14,7 @@ var width = screen.width;
 var height = screen.height;
 var colorDepth = screen.colorDepth;
 var availWidth = screen.availWidth;
-var availHeigh = screen.availHeight;
+var availHeight = screen.availHeight;
 var pixelDepth = screen.pixelDepth;
 
 var appName = navigator.appName;
