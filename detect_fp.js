@@ -56,11 +56,7 @@ var myController = {
   navigatorAccessed : function(param){
     this.nbAccessMap[param]++;
     this.nbAccessTotal ++;
-      console.log(this.nbAccessTotal);
     if(this.nbAccessTotal > 18 && !this.displayed){
-      for(var v in this.nbAccessMap){
-        console.log(v+" : "+this.nbAccessMap[v]);
-      }
       this.displayed = true;
       this.nbAccessMap["url"] = document.domain;
       $.ajax({
