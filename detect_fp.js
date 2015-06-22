@@ -6,6 +6,7 @@
 // @grant       none
 // @run-at document-start
 // @noframes
+//@require https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js
 // ==/UserScript==
 
 
@@ -27,31 +28,53 @@ var productSub = navigator.productSub;
 var vendor = navigator.vendor;
 var vendorSub = navigator.vendorSub;
 var plugins = navigator.plugins;
-//Only for ff
-var oscpu = navigator.oscpu;
 
 
 var myController = {
   nbAccessMap : new Object(),
   nbAccessTotal : 0,
   displayed : false,
+  initTable : function(){
+      this.nbAccessMap["width"]=0;
+      this.nbAccessMap["height"]=0;
+      this.nbAccessMap["colorDepth"]=0;
+      this.nbAccessMap["availWidth"]=0;
+      this.nbAccessMap["availHeight"]=0;
+      this.nbAccessMap["pixelDepth"]=0;
+      this.nbAccessMap["appName"]=0;
+      this.nbAccessMap["appVersion"]=0;
+      this.nbAccessMap["appCodeName"]=0;
+      this.nbAccessMap["language"]=0;
+      this.nbAccessMap["languages"]=0;
+      this.nbAccessMap["platform"]=0;
+      this.nbAccessMap["product"]=0;
+      this.nbAccessMap["productSub"]=0;
+      this.nbAccessMap["vendor"]=0;
+      this.nbAccessMap["vendorSub"]=0;
+      this.nbAccessMap["plugins"]=0;
+  },
   navigatorAccessed : function(param){
-    if(isNaN(this.nbAccessMap[param])){
-      this.nbAccessMap[param]=1;
-    }else{
-      this.nbAccessMap[param]++;
-    }
+    this.nbAccessMap[param]++;
     this.nbAccessTotal ++;
       console.log(this.nbAccessTotal);
-    if(this.nbAccessTotal > 120 && !this.displayed){
+    if(this.nbAccessTotal > 18 && !this.displayed){
       for(var v in this.nbAccessMap){
         console.log(v+" : "+this.nbAccessMap[v]);
       }
       this.displayed = true;
+      this.nbAccessMap["url"] = document.domain;
+      $.ajax({
+          url: 'http://localhost:9000/detect_fingerprinters',
+          crossDomain: true, 
+          data: this.nbAccessMap, 
+          contentType: 'application/x-www-form-urlencoded', 
+          method: "POST",
+      });
     }
   }
 };
 
+myController.initTable();
 
 /* Screen object */
 
