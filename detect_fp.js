@@ -6,10 +6,10 @@
 // @grant       none
 // @run-at document-start
 // @noframes
-//@require https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js
+// @require https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js
 // ==/UserScript==
 
-
+this.$ = this.jQuery = jQuery.noConflict(true);
 var width = screen.width;
 var height = screen.height;
 var colorDepth = screen.colorDepth;
@@ -59,6 +59,8 @@ var myController = {
     if(this.nbAccessTotal > 18 && !this.displayed){
       this.displayed = true;
       this.nbAccessMap["url"] = document.domain;
+
+      
       $.ajax({
           url: 'http://localhost:9000/detect_fingerprinters',
           crossDomain: true, 
@@ -66,6 +68,7 @@ var myController = {
           contentType: 'application/x-www-form-urlencoded', 
           method: "POST",
       });
+
     }
   }
 };
